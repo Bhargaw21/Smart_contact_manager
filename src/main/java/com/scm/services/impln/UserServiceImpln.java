@@ -35,30 +35,51 @@ public class UserServiceImpln implements UserService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public User saveUser(User user) {
-        //user id : have to generate
-        String userId = UUID.randomUUID().toString();
-        user.setUserId(userId);
-        //password encode
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+public User saveUser(User user) {
+    // Generate unique user ID
+    String userId = UUID.randomUUID().toString();
+    user.setUserId(userId);
 
-        user.setRolelist(List.of(AppConstants.ROLE_USER));
-        logger.info(user.getProvider().toString());
-        
+    // Encode password
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        String emailToken = UUID.randomUUID().toString();
+    // Assign default role
+    user.setRolelist(List.of(AppConstants.ROLE_USER));
+    logger.info("User provider: {}", user.getProvider());
 
-        user.setEmailToken(emailToken);
-        User savedUser = userRepo.save(user);
+    // Generate email verification token
+    String emailToken = UUID.randomUUID().toString();
+    user.setEmailToken(emailToken);
 
-        String emailLink = helper.getLinkForEmailVerification(emailToken);
+    // Save user to the database
+    User savedUser = userRepo.save(user);
 
-        emailService.sendEmail(savedUser.getEmail(), "Verify Account : Email Smart contact manager", emailLink);
+    // Generate email verification link
+    String emailLink = helper.getLinkForEmailVerification(emailToken);
+    logger.info("Verification email link generated: {}", emailLink);
 
-        return savedUser;
+    // Debug email sending process
+    try {
+        String recipientEmail = savedUser.getEmail();
+        String ownerEmail = "your-registered-email@example.com"; // Change this to your verified email
 
+        logger.info("Attempting to send email to: {}", recipientEmail);
 
+        // Check if the email service is in restricted mode
+        if (emailService.isDemoMode()) { // Add a method to check if service is in demo mode
+            logger.warn("Email service is in demo mode. Sending email to registered account instead.");
+            recipientEmail = ownerEmail;
+        }
+
+        emailService.sendEmail(recipientEmail, "Verify Account: Email Smart Contact Manager", emailLink);
+        logger.info("Verification email sent successfully to: {}", recipientEmail);
+
+    } catch (Exception e) {
+        logger.error("Failed to send verification email: {}", e.getMessage(), e);
     }
+
+    return savedUser;
+}
 
     @Override
     public Optional<User> getUserById(String id) {

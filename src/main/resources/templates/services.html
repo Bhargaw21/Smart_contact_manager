@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{})}">
+<html lang="en" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
 <head>
-    <title> Services page </title>
+    <title>Services - Smart Contact Manager</title>
 </head>
 <body>
-    <section id="content">
-        <h1>welcome to services page</h1>
-        <p>My name is services page..</p>
-    </section>
-    
+    <div id="content" class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-blue-600">Our Services</h1>
+        <p class="mt-4 text-lg text-gray-700">Discover the range of services we offer to help you manage your contacts efficiently.</p>
+        <ul class="mt-4 list-disc list-inside text-gray-600">
+            <li>Secure and easy contact storage</li>
+            <li>Quick access to your saved contacts</li>
+            <li>Smart categorization and tagging</li>
+            <li>Cloud backup and synchronization</li>
+        </ul>
+    </div>
+    <script>
+        console.log("Services page loaded successfully");
+    </script>
 </body>
 </html>

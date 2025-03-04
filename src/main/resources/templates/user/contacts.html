@@ -62,7 +62,8 @@
                         </div>
                     </form>
                     <div>
-                        <button type="submit" class="px-3 py-2 bg-green-800 text-white rounded"> Export </button>
+                        <button type="button" onclick="exportData()" class="px-3 py-2 bg-green-800 text-white rounded"> Export </button>
+
                     </div>
                        </div>
 
@@ -180,17 +181,17 @@
    
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
-    <script data-th-src="@{'/js/contacts.js'}"></script>
-    <script>
-      function exportData() {
-        TableToExcel.convert(document.getElementById("contact-table"), {
-          name: "contacts.xlsx",
-          sheet: {
-            name: "Sheet 1",
-          },
-        });
-      }
-    </script>
+<script>
+  function exportData() {
+    TableToExcel.convert(document.getElementById("contact-table"), {
+      name: "contacts.xlsx",
+      sheet: {
+        name: "Sheet 1",
+      },
+    });
+  }
+</script>
+
 </body>
 
 </html>

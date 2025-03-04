@@ -8,4 +8,6 @@ public interface EmailService {
     void sendEmailWithHtml();
 
     void sendEmailWithAttachment();
+
+    boolean isDemoMode();
 }

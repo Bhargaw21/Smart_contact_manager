@@ -3,44 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Smart Contact Manager</title>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" /> 
     <link rel="stylesheet" data-th-href="@{'/css/output.css'}">
     <style>
-        .container{
+        .container {
             margin: auto;
-            width: 50%;
-            padding: 30px;
-            background: #e2e2e2;
+            width: 60%;
+            padding: 40px;
+            background: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .hero-section {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
         }
     </style>
-     
 </head>
 <body>
-    <div class="container text-2xl">
-        <h1>welcome to home page</h1>
-         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus sit minus a molestiae provident illo amet soluta, explicabo, eaque, exercitationem nesciunt! Laborum ipsa officia sit voluptatem praesentium labore asperiores nesciunt.</p>
-    </div>
-
     
-
-<div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <svg class="w-7 h-7 text-gray-500 dark:text-gray-400 mb-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M18 5h-.7c.229-.467.349-.98.351-1.5a3.5 3.5 0 0 0-3.5-3.5c-1.717 0-3.215 1.2-4.331 2.481C8.4.842 6.949 0 5.5 0A3.5 3.5 0 0 0 2 3.5c.003.52.123 1.033.351 1.5H2a2 2 0 0 0-2 2v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V7a2 2 0 0 0-2-2ZM8.058 5H5.5a1.5 1.5 0 0 1 0-3c.9 0 2 .754 3.092 2.122-.219.337-.392.635-.534.878Zm6.1 0h-3.742c.933-1.368 2.371-3 3.739-3a1.5 1.5 0 0 1 0 3h.003ZM11 13H9v7h2v-7Zm-4 0H2v5a2 2 0 0 0 2 2h3v-7Zm6 0v7h3a2 2 0 0 0 2-2v-5h-5Z"/>
-    </svg>
-    <a href="#">
-        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Need a help in Claim?</h5>
-    </a>
-    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Go to this step by step guideline process on how to certify for your weekly benefits:</p>
-    <a href="#" class="inline-flex font-medium items-center text-blue-600 hover:underline">
-        See our guideline
-        <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-        </svg>
-    </a>
-</div>
-
-
+    <header class="hero-section">
+        <h1 class="text-4xl font-bold">Welcome to Smart Contact Manager</h1>
+        <p class="mt-4 text-lg">Manage your contacts in a smart and efficient way with ease and security.</p>
+        <a th:href="@{/login}" class="mt-6 inline-block px-6 py-2 text-lg font-semibold bg-white text-blue-500 rounded-lg hover:bg-gray-100">
+            Get Started
+        </a>
+    </header>
+    
+    
+    <div class="container mt-10">
+        <h2 class="text-2xl font-semibold">Why Choose Smart Contact Manager?</h2>
+        <p class="mt-3 text-gray-700">Our modern contact manager allows you to securely store, organize, and retrieve your contacts effortlessly.</p>
+        <ul class="list-disc mt-4 text-left mx-auto w-3/4">
+            <li>Secure and easy-to-use interface</li>
+            <li>Cloud-based access from anywhere</li>
+            <li>Smart categorization and quick search</li>
+            <li>Seamless integration with email and phone</li>
+        </ul>
+    </div>
+    
+    <div id="features" class="max-w-3xl mx-auto p-6 mt-10 bg-white border border-gray-200 rounded-lg shadow">
+        <h3 class="text-xl font-semibold">Key Features</h3>
+        <p class="mt-2 text-gray-600">Discover the powerful features of Smart Contact Manager:</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            <div class="p-4 bg-blue-100 rounded-lg">
+                <h4 class="text-lg font-bold">Easy Import & Export</h4>
+                <p class="text-sm">Upload and download your contacts with a single click.</p>
+            </div>
+            <div class="p-4 bg-green-100 rounded-lg">
+                <h4 class="text-lg font-bold">Advanced Search</h4>
+                <p class="text-sm">Find contacts instantly using filters and categories.</p>
+            </div>
+            <div class="p-4 bg-yellow-100 rounded-lg">
+                <h4 class="text-lg font-bold">Secure Backup</h4>
+                <p class="text-sm">Never lose your contacts with automatic cloud backup.</p>
+            </div>
+            <div class="p-4 bg-red-100 rounded-lg">
+                <h4 class="text-lg font-bold">Multi-Device Sync</h4>
+                <p class="text-sm">Access your contacts from mobile, tablet, or desktop.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="mt-10 text-center text-gray-500 text-sm">
+        &copy; 2025 Smart Contact Manager. All rights reserved.
+    </footer>
+    
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
     
 </body>

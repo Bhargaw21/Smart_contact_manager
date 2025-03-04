@@ -41,4 +41,10 @@ public class EmailServiceImpl implements  EmailService{
         throw new UnsupportedOperationException("Unimplemented method 'sendEmailWithAttachment'");
     }
 
+    @Override
+    public boolean isDemoMode() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isDemoMode'");
+    }
+
 }
