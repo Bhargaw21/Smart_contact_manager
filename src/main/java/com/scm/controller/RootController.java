@@ -20,6 +20,9 @@ public class RootController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private User user;
+
     @ModelAttribute
     public void addLoggedInUserInformation(Model model, Authentication authentication) {
         if(authentication == null){

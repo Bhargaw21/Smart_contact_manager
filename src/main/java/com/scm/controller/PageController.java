@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scm.entities.User;
-import com.scm.forms.UserForm; 
+import com.scm.forms.UserForm;
 import com.scm.helpers.message;
 import com.scm.helpers.messageType;
 import com.scm.services.UserService;
@@ -38,7 +38,7 @@ public class PageController {
     @GetMapping("/home")
     public String home(Model model){
         System.out.println("Home page handler");
-        return "home";
+        return "Home";
     }
 
     // about route 
