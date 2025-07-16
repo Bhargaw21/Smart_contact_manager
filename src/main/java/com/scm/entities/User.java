@@ -19,7 +19,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,56 +28,56 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "users") 
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-
 public class User implements UserDetails {
 
     @Id
     private String userId;
-    @Column(name="user_Name" , nullable = false)
+
+    @Column(name = "user_Name", nullable = false)
     private String Name;
-    @Column(unique = true , nullable = false)
+
+    @Column(unique = true, nullable = false)
     private String email;
-    @Column(columnDefinition ="TEXT")
+
+    @Column(columnDefinition = "TEXT")
     private String about;
-    @Getter(value = AccessLevel.NONE )
-    private String password;
+
+    private String password; // ✅ Don't suppress the getter!
+
     @Column(columnDefinition = "TEXT")
     private String profilepic;
+
     private String phoneNumber;
 
-    @Getter(value = AccessLevel.NONE)
-
-    // information
     private boolean enabled = false;
     private boolean emailVerified = false;
     private boolean phoneNummberverified = false;
 
     @Enumerated(value = EnumType.STRING)
-    // SELF,GOOGLE,FACEBOOK,GITHUB,LINKEDN
     private Providers provider = Providers.SELF;
+
     private String providerUserId;
 
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL , fetch = FetchType.LAZY , orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<contact> contacts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> rolelist = new ArrayList<>();
 
-
     private String emailToken;
 
+    // ===== Spring Security UserDetails methods =====
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<SimpleGrantedAuthority> roles = rolelist.stream().map(role-> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
-        return roles;
+        return rolelist.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
-
 
     @Override
     public String getUsername() {
@@ -86,17 +85,17 @@ public class User implements UserDetails {
     }
 
     @Override
-    public boolean isAccountNonExpired(){
+    public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isAccountNonLocked(){
+    public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
-    public boolean isCredentialsNonExpired(){
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
@@ -107,130 +106,118 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-       return this.password;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String Name) {
-        this.Name = Name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        return this.password;
     }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public String getName() {
+        return Name;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getAbout() {
         return about;
     }
 
-    public void setAbout(String about) {
-        this.about = about;
-    }
-
     public String getProfilepic() {
         return profilepic;
-    }
-
-    public void setProfilepic(String profilepic) {
-        this.profilepic = profilepic;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public boolean isEmailVerified() {
         return emailVerified;
-    }
-
-    public void setEmailVerified(boolean emailVerified) {
-        this.emailVerified = emailVerified;
     }
 
     public boolean isPhoneNummberverified() {
         return phoneNummberverified;
     }
 
-    public void setPhoneNummberverified(boolean phoneNummberverified) {
-        this.phoneNummberverified = phoneNummberverified;
-    }
-
     public Providers getProvider() {
         return provider;
-    }
-
-    public void setProvider(Providers provider) {
-        this.provider = provider;
     }
 
     public String getProviderUserId() {
         return providerUserId;
     }
 
-    public void setProviderUserId(String providerUserId) {
-        this.providerUserId = providerUserId;
-    }
-
     public List<contact> getContacts() {
         return contacts;
-    }
-
-    public void setContacts(List<contact> contacts) {
-        this.contacts = contacts;
     }
 
     public List<String> getRolelist() {
         return rolelist;
     }
 
-    public void setRolelist(List<String> rolelist) {
-        this.rolelist = rolelist;
-    }
-
     public String getEmailToken() {
         return emailToken;
     }
 
-    public void setEmailToken(String emailToken) {
-        this.emailToken = emailToken;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-    
+    public void setEmailVerified(boolean emailVerified) {
+        this.emailVerified = emailVerified;
+    }
 
+    public void setPhoneNummberverified(boolean phoneNummberverified) {
+        this.phoneNummberverified = phoneNummberverified;
+    }
 
-   
-    
-    
+    public void setProvider(Providers provider) {
+        this.provider = provider;
+    }
 
+    public void setProviderUserId(String providerUserId) {
+        this.providerUserId = providerUserId;
+    }
 
+    public void setContacts(List<contact> contacts) {
+        this.contacts = contacts;
+    }
 
+    public void setRolelist(List<String> rolelist) {
+        this.rolelist = rolelist;
+    }
 
-
+    public void setEmailToken(String emailToken) {
+        this.emailToken = emailToken;
+    }
 }

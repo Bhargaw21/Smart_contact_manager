@@ -23,6 +23,7 @@ public class SecurityCustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("Finding user with email: " + username);
         logger.info("Attempting to load user by username (email): {}", username);
 
         if (username == null || username.trim().isEmpty()) {
