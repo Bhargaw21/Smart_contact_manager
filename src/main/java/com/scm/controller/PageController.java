@@ -1,6 +1,8 @@
 package com.scm.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,10 +36,15 @@ public class PageController {
     }
 
     @GetMapping("/home")
-    public String home(Model model) {
-        System.out.println("Home page handler");
-        return "Home";
+public String home(Model model) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    if (auth == null || !auth.isAuthenticated() || auth.getPrincipal().toString().equals("anonymousUser")) {
+        return "redirect:/login";
     }
+
+    return "Home";
+}
 
     @GetMapping("/about")
     public String about() {
@@ -57,16 +64,29 @@ public class PageController {
     }
 
     @GetMapping("/login")
-    public String loginpage() {
-        return "login";
+public String loginpage(Model model) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    if (auth != null && auth.isAuthenticated() && !auth.getPrincipal().toString().equals("anonymousUser")) {
+        // Redirect to dashboard if already authenticated
+        return "redirect:/user/profile";
+    }
+    return "login";
+}
+
+
+@GetMapping("/register")
+public String registerpage(Model model) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    if (auth != null && auth.isAuthenticated() && !auth.getPrincipal().toString().equals("anonymousUser")) {
+        return "redirect:/user/profile";  // already logged in
     }
 
-    @GetMapping("/register")
-    public String registerpage(Model model) {
-        UserForm userForm = new UserForm();
-        model.addAttribute("userForm", userForm);
-        return "register";
-    }
+    UserForm userForm = new UserForm();
+    model.addAttribute("userForm", userForm);
+    return "register";
+}
 
     // processing registration
     @RequestMapping(value = "/do-register", method = RequestMethod.POST)

@@ -47,5 +47,85 @@ public class ContactForm {
 
     private String picture;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+
+    public Boolean getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getWebsitelink() {
+        return websitelink;
+    }
+
+    public void setWebsitelink(String websitelink) {
+        this.websitelink = websitelink;
+    }
+
+    public String getLinkednLink() {
+        return LinkednLink;
+    }
+
+    public void setLinkednLink(String LinkednLink) {
+        this.LinkednLink = LinkednLink;
+    }
+
+    public MultipartFile getContactImage() {
+        return ContactImage;
+    }
+
+    public void setContactImage(MultipartFile ContactImage) {
+        this.ContactImage = ContactImage;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
 
 }

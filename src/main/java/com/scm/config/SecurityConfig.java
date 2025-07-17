@@ -16,100 +16,59 @@ import com.scm.services.impln.SecurityCustomUserDetailService;
 @Configuration
 public class SecurityConfig {
 
-    // private InMemoryUserDetailsManager inMemoryUserDetailsManager;
+    @Autowired
+    private SecurityCustomUserDetailService userDetailService;
 
-   /*  @Bean
-    public UserDetailsService userDetailsService(){
+    @Autowired
+    private OAuthAuthenticationSuccessHandler handler;
 
-       UserDetails user1 = User.withDefaultPasswordEncoder().username("admin").password("admin123").build();
-        var inMemoryUserDetailsManager = new InMemoryUserDetailsManager(user1);
-        return inMemoryUserDetailsManager;
+    @Autowired
+    private AuthFailureHandler authFailureHandler;
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailService);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
     }
-}*/
 
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-@Autowired
-private SecurityCustomUserDetailService userDetailService;
+        http
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/login", "/register", "/oauth2/**", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/login")
+                .loginProcessingUrl("/authenticate")
+                .defaultSuccessUrl("/user/profile", true)
+                .failureHandler(authFailureHandler)
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .permitAll()
+            )
+            .oauth2Login(oauth -> oauth
+                .loginPage("/login")
+                .successHandler(handler)
+            )
+            .logout(logout -> logout
+                .logoutUrl("/do-logout")
+                .logoutSuccessUrl("/login?logout=true")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+            );
 
-@Autowired
-private OAuthAuthenticationSuccessHandler handler;
+        return http.build();
+    }
 
-@Autowired
-private  AuthFailureHandler authFailureHandler; 
-
-
-@Bean
-public AuthenticationProvider authenticationProvider(){
-    DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-    daoAuthenticationProvider.setUserDetailsService(userDetailService);
-    daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-    return daoAuthenticationProvider;
-}
-
-@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-       
-    httpSecurity.authorizeHttpRequests(authorize->{
-
-       // authorize.requestMatchers("/home","/register").permitAll();
-
-       authorize.requestMatchers("/user/**").authenticated();
-       authorize.anyRequest().permitAll(); 
-    });
-
-    httpSecurity.formLogin(formLogin->{
-        formLogin.loginPage("/login");
-        formLogin.loginProcessingUrl("/authenticate");
-        formLogin.defaultSuccessUrl("/user/profile", true);
-
-       // formLogin.failureForwardUrl("/login?error=true");
-        formLogin.usernameParameter("email");
-        formLogin.passwordParameter("password");
-
-       /*  formLogin.failureHandler(new AuthenticationFailureHandler() {
-
-            @Override
-            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-                    AuthenticationException exception) throws IOException, ServletException {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationFailure'");
-            }
-            
-        });
-
-        formLogin.successHandler(new AuthenticationSuccessHandler() {
-
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                    Authentication authentication) throws IOException, ServletException {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationSuccess'");
-            }
-            
-        });*/
-
-        formLogin.failureHandler(authFailureHandler);
-    });
-
-
-    httpSecurity.csrf(AbstractHttpConfigurer::disable);
-    httpSecurity.logout(logoutForm->{
-        logoutForm.logoutUrl("/do-logout");
-        logoutForm.logoutSuccessUrl("/login?logout=true");
-    });
-
-    httpSecurity.oauth2Login(oauth->{
-        oauth.loginPage("/login");
-        oauth.successHandler(handler);
-    });
-
-
-
-    return httpSecurity.build();
-}
-
-@Bean
-public PasswordEncoder passwordEncoder(){
-    return new BCryptPasswordEncoder();
-}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

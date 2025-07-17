@@ -47,6 +47,110 @@ public class contact {
     @OneToMany(mappedBy = "Contact" , cascade = CascadeType.ALL , fetch = FetchType.EAGER, orphanRemoval = true)
     private List<SocialLink> links = new ArrayList<>();
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+
+    public String getWebsitelink() {
+        return websitelink;
+    }
+
+    public void setWebsitelink(String websitelink) {
+        this.websitelink = websitelink;
+    }
+
+    public String getLinkednLink() {
+        return LinkednLink;
+    }
+
+    public void setLinkednLink(String LinkednLink) {
+        this.LinkednLink = LinkednLink;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getCloudianryImagePublicId() {
+        return cloudianryImagePublicId;
+    }
+
+    public void setCloudianryImagePublicId(String cloudianryImagePublicId) {
+        this.cloudianryImagePublicId = cloudianryImagePublicId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<SocialLink> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<SocialLink> links) {
+        this.links = links;
+    }
+
 
 
 
