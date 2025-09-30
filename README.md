@@ -25,3 +25,8 @@ Spring MVC: For handling HTTP requests and managing routing.
 Hibernate: Used for ORM (Object Relational Mapping) to interact with the database.
 Spring Security: For user authentication and authorization.
 MySQL: As the relational database to store user and contact data.
+
+<img width="2940" height="1770" alt="image" src="https://github.com/user-attachments/assets/983ad81b-3af8-4a27-8dcd-099ce77185ff" />
+
+<img width="2616" height="1594" alt="image" src="https://github.com/user-attachments/assets/dafae5ab-1404-4642-81b5-43ef18c66c97" />
+
